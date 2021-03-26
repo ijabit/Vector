@@ -1,2 +1,25 @@
-<v-toolbar></v-toolbar>
-<router-outlet></router-outlet>
+<mat-sidenav-container class="v-sidenav-container">
+    <mat-sidenav
+        #sidenav
+        [mode]="'side'"
+        [opened]="isScreenSmall"
+        class="v-sidenav mat-elevation-z10"
+        [mode]="!isScreenSmall ? 'over' : 'side'"
+    >
+        <mat-toolbar color="primary">
+            Students
+        </mat-toolbar>
+        <mat-list>
+            <mat-list-item>Item 1</mat-list-item>
+            <mat-list-item>Item 2</mat-list-item>
+            <mat-list-item>Item 3</mat-list-item>
+        </mat-list>
+    </mat-sidenav>
+
+    <div class="v-sidenav-content">
+        <v-toolbar (toggleSidenav)="sidenav.toggle()"></v-toolbar>
+        <div class="wrapper">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</mat-sidenav-container>

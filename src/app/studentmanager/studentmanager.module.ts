@@ -11,9 +11,11 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
-  { path: "", component: StudentmanagerAppComponent, children: [
-    { path: "", component: MainContentComponent }
-  ] },
+  {
+    path: "", component: StudentmanagerAppComponent, children: [
+      { path: "", component: MainContentComponent }
+    ]
+  },
   { path: "**", redirectTo: "" }
 ];
 
