@@ -9,18 +9,22 @@ import { StudentmanagerAppComponent } from './studentmanager-app.component';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { Routes, RouterModule } from '@angular/router';
+import { StudentsComponent } from './components/students/students.component';
+import { CoursesComponent } from './components/courses/courses.component';
 
 const routes: Routes = [
   {
     path: "", component: StudentmanagerAppComponent, children: [
-      { path: "", component: MainContentComponent }
-    ]
+      { path: "", component: MainContentComponent },
+      { path: "students", component: StudentsComponent },
+      { path: "courses", component: CoursesComponent }
+    ],
   },
   { path: "**", redirectTo: "" }
 ];
 
 @NgModule({
-  declarations: [StudentmanagerAppComponent, ToolbarComponent, MainContentComponent, SidenavComponent],
+  declarations: [StudentmanagerAppComponent, ToolbarComponent, MainContentComponent, SidenavComponent, StudentsComponent, CoursesComponent],
   imports: [
     CommonModule,
     MaterialModule,

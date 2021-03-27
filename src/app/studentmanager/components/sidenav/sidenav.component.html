@@ -1,19 +1,21 @@
 <mat-sidenav-container class="v-sidenav-container">
     <mat-sidenav
         #sidenav
-        [mode]="'side'"
-        [opened]="isScreenSmall"
+        [opened]="!isScreenSmall"
         class="v-sidenav mat-elevation-z10"
-        [mode]="!isScreenSmall ? 'over' : 'side'"
+        [mode]="isScreenSmall ? 'over' : 'side'"
     >
         <mat-toolbar color="primary">
-            Students
+            <button mat-button routerLink="/studentmanager">Home</button>
         </mat-toolbar>
-        <mat-list>
-            <mat-list-item>Item 1</mat-list-item>
-            <mat-list-item>Item 2</mat-list-item>
-            <mat-list-item>Item 3</mat-list-item>
-        </mat-list>
+        <mat-nav-list>
+            <mat-list-item routerLink="/studentmanager/students">
+                <a matLine>Students</a>
+            </mat-list-item>
+            <mat-list-item routerLink="/studentmanager/courses">
+                <a matLine>Courses</a>
+            </mat-list-item>
+        </mat-nav-list>
     </mat-sidenav>
 
     <div class="v-sidenav-content">
