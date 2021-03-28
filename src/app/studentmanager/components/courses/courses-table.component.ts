@@ -1,5 +1,5 @@
 import { Course } from './../../models/course';
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -11,6 +11,8 @@ import { MatSort } from '@angular/material/sort';
 })
 export class CoursesTableComponent implements OnInit, AfterViewInit {
     @Input() public courses: Course[] = [];
+    @Input() public selectable = false;
+    @Output() public courseSelected = new EventEmitter<Course>();
 
     public displayedColumns = ["name", "content"];
     public dataSource!: MatTableDataSource<Course>;
@@ -37,6 +39,12 @@ export class CoursesTableComponent implements OnInit, AfterViewInit {
 
         if (this.dataSource.paginator) {
             this.dataSource.paginator.firstPage();
+        }
+    }
+
+    onClickCourseRow(course: Course) {
+        if (this.selectable) {
+            this.courseSelected.emit(course);
         }
     }
 }

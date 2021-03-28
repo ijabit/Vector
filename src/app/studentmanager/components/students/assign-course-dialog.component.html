@@ -1,1 +1,6 @@
-<p>assign-course-dialog works!</p>
+<v-courses-table
+    *ngIf="courses.length > 0"
+    [courses]="courses" 
+    [selectable]="true"
+    (courseSelected)="courseSelected($event)"
+></v-courses-table>

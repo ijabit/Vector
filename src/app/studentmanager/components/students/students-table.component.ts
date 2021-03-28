@@ -50,7 +50,6 @@ export class StudentsTableComponent implements OnInit, AfterViewInit {
     }
 
     updateStudent(updatedStudent: Student) {
-        debugger;
         Object.assign(this.expandedStudent, updatedStudent);
         this.expandedStudent = null;
     }

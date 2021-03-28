@@ -27,7 +27,11 @@
 
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                class="course-row"
+                [class.selectable]="selectable"
+                (click)="onClickCourseRow(row)"
+            ></tr>
         </table>
 
         <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>

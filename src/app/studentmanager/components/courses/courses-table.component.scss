@@ -36,3 +36,12 @@ th {
     align-items: center;
     justify-content: center;
 }
+
+tr.course-row.selectable:hover {
+    background: whitesmoke;
+    cursor: pointer;
+}
+
+tr.course-row.selectable:active {
+    background: #efefef;
+}

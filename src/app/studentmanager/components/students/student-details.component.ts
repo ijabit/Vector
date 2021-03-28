@@ -73,6 +73,12 @@ export class StudentDetailsComponent implements OnInit {
     }
 
     public openAddCourseDialog(): void {
-        this.dialog.open(AssignCourseDialogComponent);
+        let dialogRef = this.dialog.open(AssignCourseDialogComponent, {
+            width: "80%"
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            this.courses.push(result);
+        });
     }
 }
