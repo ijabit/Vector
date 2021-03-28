@@ -6,11 +6,14 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { MainContentComponent } from './components/main-content/main-content.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { StudentmanagerAppComponent } from './studentmanager-app.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { Routes, RouterModule } from '@angular/router';
 import { StudentsComponent } from './components/students/students.component';
 import { CoursesComponent } from './components/courses/courses.component';
+import { StudentsTableComponent } from './components/students/students-table.component';
+import { StudentDetailsComponent } from './components/students/student-details.component';
+import { AssignCourseDialogComponent } from './components/students/assign-course-dialog.component';
 
 const routes: Routes = [
   {
@@ -24,12 +27,13 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [StudentmanagerAppComponent, ToolbarComponent, MainContentComponent, SidenavComponent, StudentsComponent, CoursesComponent],
+  declarations: [StudentmanagerAppComponent, ToolbarComponent, MainContentComponent, SidenavComponent, StudentsComponent, CoursesComponent, StudentsTableComponent, StudentDetailsComponent, AssignCourseDialogComponent],
   imports: [
     CommonModule,
     MaterialModule,
     FlexLayoutModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule.forChild(routes)
   ]
 })

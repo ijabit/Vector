@@ -1,0 +1,32 @@
+.card {
+    margin: 24px 4px;
+}
+
+.mat-card-content > .form {
+    display: flex;
+    flex-direction: column;
+    padding: 0 16px;
+    flex: 0 0 100%
+    
+}
+
+.header-spacer {
+    flex: 1 1 auto;
+}
+
+.courses {
+    width: 400px;
+}
+
+.course-list-header {
+    display: flex;
+}
+
+.course-list-title {
+    flex: 1 1 auto;
+    font-size: 18px;
+    line-height: 36px;
+    margin: 0 16px;
+
+    color: rgba(0,0,0,.54);
+}

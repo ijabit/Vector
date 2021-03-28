@@ -9,16 +9,15 @@ import { Observable } from 'rxjs';
     styleUrls: ['./students.component.scss']
 })
 export class StudentsComponent implements OnInit {
-    public students: Observable<Student[]> | null = null;
+    public students: Student[] = [];
 
     constructor(private service: StudentService) { }
 
     ngOnInit(): void {
-        // this.service.students.subscribe(students => {
-        //     this.students = this.students;
-        // });
+        this.service.students.subscribe(students => {
+            this.students = students;
+        });
 
-        this.students = this.service.students;
         this.service.loadAll();
     }
 }

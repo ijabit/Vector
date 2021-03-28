@@ -3,8 +3,6 @@
         <mat-card-title>Student List</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <p>
-            Data table here
-        </p>
+        <v-students-table [students]="students" *ngIf="students.length > 0"></v-students-table>
     </mat-card-content>
 </mat-card>

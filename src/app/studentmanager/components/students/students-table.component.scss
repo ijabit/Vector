@@ -1,0 +1,65 @@
+table {
+    width: 100%;
+}
+
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+
+td,
+th {
+    width: 20%;
+}
+
+.container {
+    position: relative;
+    min-height: 200px;
+    height: 100%;
+}
+
+.table-container {
+    position: relative;
+    height: 100%;
+    overflow: auto;
+}
+
+.loading-shade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 56px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+tr.detail-row {
+    height: 0;
+}
+
+tr.student-row:not(.expanded-row):hover {
+    background: whitesmoke;
+    cursor: pointer;
+}
+
+tr.student-row:not(.expanded-row):active {
+    background: #efefef;
+}
+
+.student-row td {
+    border-bottom-width: 0;
+}
+
+.student-detail {
+    overflow: hidden;
+    display: flex;
+    width: 100%;
+}
+
+.student-detail-component {
+    width: 100%;
+}

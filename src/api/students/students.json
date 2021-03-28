@@ -5,8 +5,24 @@
     "lastName": "Blucher",
     "emailAddress": "dblucher0@yelp.com",
     "courses": [
-  
-    ]
+      {
+        "id": 5,
+        "name": "Engineering",
+        "content": "Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat."
+      }, {
+        "id": 6,
+        "name": "Legal",
+        "content": null
+      }, {
+        "id": 7,
+        "name": "Business Development",
+        "content": null
+      }, {
+        "id": 8,
+        "name": "Human Resources",
+        "content": "Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero."
+      }
+  ]
   }, {
     "id": 2,
     "firstName": "Adiana",

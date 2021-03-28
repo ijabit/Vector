@@ -1,0 +1,64 @@
+<mat-card class="card">
+    <mat-card-header>
+        <div>
+            <mat-card-title>{{ nameFormatted }}</mat-card-title>
+            <mat-card-subtitle>{{ student.emailAddress }}</mat-card-subtitle>
+        </div>
+        <span class="header-spacer"></span>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="openAddCourseDialog()">Enroll in Course</button>
+        </mat-menu>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="form">
+            <mat-form-field appearance="fill">
+                <mat-label>First Name</mat-label>
+                <input matInput [formControl]="firstName" required>
+                <mat-error *ngIf="firstName.invalid">{{ getErrorMessage(firstName) }}</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Middle Name</mat-label>
+                <input matInput [formControl]="middleName">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Last Name</mat-label>
+                <input matInput [formControl]="lastName" required>
+                <mat-error *ngIf="lastName.invalid">{{ getErrorMessage(lastName) }}</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Email Address</mat-label>
+                <input matInput [formControl]="emailAddress" required>
+                <mat-error *ngIf="emailAddress.invalid">{{ getErrorMessage(emailAddress) }}</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="courses">
+            <div class="course-list-header">
+                <span class="course-list-title">Courses</span>
+                <button mat-icon-button color="warn">
+                    <mat-icon
+                        *ngIf="courseList.selectedOptions.selected.length"
+                        (click)="removeCourses(courseList.selectedOptions.selected)"
+                    >delete</mat-icon>
+                </button>
+            </div>
+
+            <mat-selection-list class="course-list" #courseList>
+                <mat-list-option *ngFor="let course of courses" [value]="course">
+                    {{ course.name }}
+                </mat-list-option>
+            </mat-selection-list>
+        </div>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-button color="primary" (click)="onSave()">
+            <mat-icon>save</mat-icon> Save
+        </button>
+        <button mat-button color="primary" (click)="onCancel()">
+            <mat-icon>cancel</mat-icon> Cancel
+        </button>
+    </mat-card-actions>
+</mat-card>
