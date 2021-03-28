@@ -6,12 +6,15 @@
     display: flex;
     flex-direction: column;
     padding: 0 16px;
-    flex: 0 0 100%
-    
+    flex: 0 0 100%    
 }
 
-.header-spacer {
+.course-list-header-spacer {
     flex: 1 1 auto;
+}
+
+.course-list-none {
+    margin-left: 12px;
 }
 
 .courses {
@@ -23,7 +26,6 @@
 }
 
 .course-list-title {
-    flex: 1 1 auto;
     font-size: 18px;
     line-height: 36px;
     margin: 0 16px;

@@ -15,6 +15,7 @@ import { StudentsTableComponent } from './components/students/students-table.com
 import { StudentDetailsComponent } from './components/students/student-details.component';
 import { AssignCourseDialogComponent } from './components/students/assign-course-dialog.component';
 import { CoursesTableComponent } from './components/courses/courses-table.component';
+import { CreateStudentDialogComponent } from './components/students/create-student-dialog.component';
 
 const routes: Routes = [
   {
@@ -28,7 +29,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [StudentmanagerAppComponent, ToolbarComponent, MainContentComponent, SidenavComponent, StudentsComponent, CoursesComponent, StudentsTableComponent, StudentDetailsComponent, AssignCourseDialogComponent, CoursesTableComponent],
+  declarations: [StudentmanagerAppComponent, ToolbarComponent, MainContentComponent, SidenavComponent, StudentsComponent, CoursesComponent, StudentsTableComponent, StudentDetailsComponent, AssignCourseDialogComponent, CoursesTableComponent, CreateStudentDialogComponent],
   imports: [
     CommonModule,
     MaterialModule,

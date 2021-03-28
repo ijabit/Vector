@@ -49,8 +49,9 @@
                             *ngIf="student == expandedStudent"
                             [student]="student"
                             class="student-detail-component"
-                            (saveChanges)="updateStudent($event)"
-                            (cancel)="cancelUpdateStudent()"
+                            (changesSaved)="collapseStudentDetails()"
+                            (cancel)="collapseStudentDetails()"
+                            (savingChanges)="detailsSaving($event)"
                         ></v-student-details>
                     </div>
                 </td>

@@ -1,3 +1,4 @@
+import { StudentService } from './../../services/student.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
@@ -28,11 +29,15 @@ export class StudentsTableComponent implements OnInit, AfterViewInit {
     @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
     @ViewChild(MatSort) sort: MatSort | null = null;
 
-    constructor() { }
+    constructor(private service: StudentService) { }
 
     ngOnInit(): void {
         this.dataSource = new MatTableDataSource<Student>(this.students);
         this.isLoadingResults = false;
+        this.service.students.subscribe((students: Student[]) => {
+            this.dataSource.data = students;
+            this.isLoadingResults = false;
+        });
     }
 
     ngAfterViewInit(): void {
@@ -40,7 +45,7 @@ export class StudentsTableComponent implements OnInit, AfterViewInit {
         this.dataSource.sort = this.sort;        
     }
 
-    applyFilter(event: Event) {
+    public applyFilter(event: Event) {
         const filterValue = (event.target as HTMLInputElement).value;
         this.dataSource.filter = filterValue.trim().toLowerCase();
 
@@ -49,12 +54,11 @@ export class StudentsTableComponent implements OnInit, AfterViewInit {
         }
     }
 
-    updateStudent(updatedStudent: Student) {
-        Object.assign(this.expandedStudent, updatedStudent);
+    public collapseStudentDetails() {
         this.expandedStudent = null;
     }
 
-    cancelUpdateStudent() {
-        this.expandedStudent = null;
+    public detailsSaving(isSaving: boolean) {
+        this.isLoadingResults = isSaving;
     }
 }

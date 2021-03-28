@@ -27,17 +27,41 @@ export class StudentService {
         this._students = new BehaviorSubject<Student[]>([])
     }
 
-    loadAll() {
+    public addStudent(student: Student): Promise<Student> {
+        return new Promise((resolve: any, reject) => {
+
+            setTimeout(() => {
+                student.id = this.dataStore.students.length + 10;
+                this.dataStore.students.push(student);
+                this._students.next(Object.assign({}, this.dataStore).students);
+                resolve(student);
+                // reject("Error")
+            }, 2000);
+        });
+    }
+
+    public updateStudent(student: Student): Promise<Student> {
+        return new Promise((resolve: any, reject) => {
+            setTimeout(() => {
+                this.dataStore.students.splice(this.dataStore.students.map(x => x.id).indexOf(student.id), 1, student);
+                this._students.next(Object.assign({}, this.dataStore).students);
+                resolve(student);
+                // reject("Error")
+            }, 2000);
+        });
+    }
+
+    public loadAll() {
         this.http.get<Student[]>(this.serviceUrl)
             .pipe(
                 catchError(this.handleError)
             )
             .subscribe((data) => {
-                    console.log(data);
-                    this.dataStore.students = data;
-                    this._students.next(Object.assign({}, this.dataStore).students)
-                }
-            );            
+                console.log(data);
+                this.dataStore.students = data;
+                this._students.next(Object.assign({}, this.dataStore).students)
+            }
+        );
     }
 
     private handleError(err: HttpErrorResponse, caught: Observable<Student[]>) {

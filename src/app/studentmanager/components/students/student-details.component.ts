@@ -1,3 +1,4 @@
+import { StudentService } from './../../services/student.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -5,6 +6,7 @@ import { MatListOption } from '@angular/material/list';
 import { Course } from '../../models/course';
 import { Student } from '../../models/student';
 import { AssignCourseDialogComponent } from './assign-course-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'v-student-details',
@@ -13,19 +15,21 @@ import { AssignCourseDialogComponent } from './assign-course-dialog.component';
 })
 export class StudentDetailsComponent implements OnInit {
     @Input() public student!: Student;
-    @Output() saveChanges = new EventEmitter<Student>();
+    @Output() changesSaved = new EventEmitter<Student>();
     @Output() cancel = new EventEmitter<void>();
+    @Output() savingChanges = new EventEmitter<boolean>();
     public firstName = new FormControl('', [Validators.required]);
     public middleName = new FormControl('', []);
     public lastName = new FormControl('', [Validators.required]);
     public emailAddress = new FormControl('', [Validators.required, Validators.email]);
     public courses: Course[] = [];
+    public isSaving = false;
 
     public get nameFormatted() {
         return this.student.firstName + (this.student.middleName ? ` ${this.student.middleName}` : "") + ` ${this.student.lastName}`;
     }
 
-    constructor(private dialog: MatDialog) { }
+    constructor(private dialog: MatDialog, private service: StudentService, private snackBar: MatSnackBar) { }
 
     ngOnInit(): void {
         this.firstName.setValue(this.student.firstName);
@@ -44,13 +48,30 @@ export class StudentDetailsComponent implements OnInit {
         }
 
         const updatedStudent = {
+            id: this.student.id,
             firstName: this.firstName.value,
             lastName: this.lastName.value,
             middleName: this.middleName.value,
-            emailAddress: this.emailAddress.value
+            emailAddress: this.emailAddress.value,
+            courses: [...this.courses]
         } as Student;
 
-        this.saveChanges.emit(updatedStudent);
+        this.savingChanges.emit(true);
+        this.isSaving = true;
+        this.service
+            .updateStudent(updatedStudent)
+            .then(() => this.snackBar.open("Saved student!", undefined, {
+                duration: 2000
+            }))
+            .catch(() => {
+                this.snackBar.open("Error saving", undefined, {
+                    duration: 2000
+                });
+            })
+            .finally(() => {
+                this.savingChanges.emit(false);
+                this.isSaving = false
+            });
     }
 
     public onCancel() {

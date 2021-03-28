@@ -1,6 +1,15 @@
 <mat-card>
     <mat-card-header>
-        <mat-card-title>Student List</mat-card-title>
+        <mat-card-title>Students</mat-card-title>
+        <span class="student-list-header-spacer"></span>
+        <div class="student-list-right-actions">
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="openCreateStudentDialog()">Add a Student</button>
+            </mat-menu>
+        </div>
     </mat-card-header>
     <mat-card-content>
         <v-students-table [students]="students" *ngIf="students.length > 0"></v-students-table>

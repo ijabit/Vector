@@ -1,8 +1,11 @@
+<div class="loading-shade" *ngIf="isSaving">
+    <mat-spinner *ngIf="isSaving"></mat-spinner>
+</div>
 <mat-card class="card">
     <mat-card-header>
         <div>
-            <mat-card-title>{{ nameFormatted }}</mat-card-title>
-            <mat-card-subtitle>Student ID: {{ student.id }}</mat-card-subtitle>
+            <mat-card-title>Create a Student</mat-card-title>
+            <mat-card-subtitle></mat-card-subtitle>
         </div>
     </mat-card-header>
     <mat-card-content>
@@ -27,38 +30,10 @@
                 <mat-error *ngIf="emailAddress.invalid">{{ getErrorMessage(emailAddress) }}</mat-error>
             </mat-form-field>
         </div>
-
-        <div class="courses">
-            <div class="course-list-header">
-                <span class="course-list-title">Courses</span>
-                <span class="course-list-header-spacer"></span>
-                <div class="course-list-right-actions">
-                    <button mat-icon-button color="warn">
-                        <mat-icon *ngIf="courseList.selectedOptions.selected.length"
-                            (click)="removeCourses(courseList.selectedOptions.selected)">delete</mat-icon>
-                    </button>
-                    <button mat-icon-button [matMenuTriggerFor]="menu">
-                        <mat-icon>more_vert</mat-icon>
-                    </button>
-                    <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="openAddCourseDialog()">Enroll in Course</button>
-                    </mat-menu>                    
-                </div>
-            </div>
-
-            <mat-selection-list class="course-list" #courseList>
-                <mat-list-option *ngFor="let course of courses" [value]="course">
-                    {{ course.name }}
-                </mat-list-option>
-                <span *ngIf="courses.length < 1" class="course-list-none">
-                    No courses assigned
-                </span>
-            </mat-selection-list>
-        </div>
     </mat-card-content>
     <mat-card-actions>
         <button mat-button color="primary" (click)="onSave()" [disabled]="isSaving">
-            <mat-icon>save</mat-icon> Save
+            <mat-icon>save</mat-icon> Create
         </button>
         <button mat-button color="primary" (click)="onCancel()" [disabled]="isSaving">
             <mat-icon>cancel</mat-icon> Cancel
