@@ -9,7 +9,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
     { path: "studentmanager", loadChildren: () => import("./studentmanager/studentmanager.module").then(m => m.StudentmanagerModule) },
-    { path: "demo", loadChildren: () => import("./demo/demo.module").then(m => m.DemoModule) },
     { path: "**", redirectTo: "studentmanager" }
 ];
 

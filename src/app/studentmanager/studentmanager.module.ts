@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { MaterialModule } from '../shared/material.module';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
-import { MainContentComponent } from './components/main-content/main-content.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { StudentmanagerAppComponent } from './studentmanager-app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -20,7 +19,7 @@ import { CreateStudentDialogComponent } from './components/students/create-stude
 const routes: Routes = [
   {
     path: "", component: StudentmanagerAppComponent, children: [
-      { path: "", component: MainContentComponent },
+      { path: "", redirectTo: "students" },
       { path: "students", component: StudentsComponent },
       { path: "courses", component: CoursesComponent }
     ],
@@ -29,7 +28,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [StudentmanagerAppComponent, ToolbarComponent, MainContentComponent, SidenavComponent, StudentsComponent, CoursesComponent, StudentsTableComponent, StudentDetailsComponent, AssignCourseDialogComponent, CoursesTableComponent, CreateStudentDialogComponent],
+  declarations: [StudentmanagerAppComponent, ToolbarComponent, SidenavComponent, StudentsComponent, CoursesComponent, StudentsTableComponent, StudentDetailsComponent, AssignCourseDialogComponent, CoursesTableComponent, CreateStudentDialogComponent],
   imports: [
     CommonModule,
     MaterialModule,
