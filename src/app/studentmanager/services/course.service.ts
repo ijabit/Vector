@@ -2,45 +2,45 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError } from "rxjs/operators";
-import { Student } from '../models/student';
+import { Course } from '../models/course';
 
 @Injectable({
     providedIn: 'root'
 })
-export class StudentService {
-    private serviceUrl = "api/students/students.json";
+export class CourseService {
+    private serviceUrl = "api/courses/courses.json";
 
-    private _students: BehaviorSubject<Student[]>;
+    private _courses: BehaviorSubject<Course[]>;
 
     private dataStore: {
-        students: Student[]
+        courses: Course[]
     }
 
-    public get students(): Observable<Student[]> {
-        return this._students.asObservable();
+    public get courses(): Observable<Course[]> {
+        return this._courses.asObservable();
     }
 
     constructor(private http: HttpClient) {
         this.dataStore = {
-            students: []
+            courses: []
         };
-        this._students = new BehaviorSubject<Student[]>([])
+        this._courses = new BehaviorSubject<Course[]>([])
     }
 
     loadAll() {
-        this.http.get<Student[]>(this.serviceUrl)
+        this.http.get<Course[]>(this.serviceUrl)
             .pipe(
                 catchError(this.handleError)
             )
             .subscribe((data) => {
                     console.log(data);
-                    this.dataStore.students = data;
-                    this._students.next(Object.assign({}, this.dataStore).students)
+                    this.dataStore.courses = data;
+                    this._courses.next(Object.assign({}, this.dataStore).courses)
                 }
             );            
     }
 
-    private handleError(err: HttpErrorResponse, caught: Observable<Student[]>) {
+    private handleError(err: HttpErrorResponse, caught: Observable<Course[]>) {
         let errorMessage = err.error instanceof ErrorEvent ? err.error.message : err.message;
         console.error(errorMessage);
 

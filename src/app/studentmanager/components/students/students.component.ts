@@ -1,7 +1,6 @@
 import { StudentService } from './../../services/student.service';
 import { Student } from './../../models/student';
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 
 @Component({
     selector: 'v-students',
