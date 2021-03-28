@@ -42,7 +42,10 @@ export class StudentsTableComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit(): void {
         this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;        
+        this.dataSource.sort = this.sort;
+        this.dataSource.sortingDataAccessor = (data: Student, sortHeaderId: string) => {
+            return sortHeaderId === "courseCount" ? data.courses.length : data[sortHeaderId as keyof typeof data] as any;
+        }
     }
 
     public applyFilter(event: Event) {
