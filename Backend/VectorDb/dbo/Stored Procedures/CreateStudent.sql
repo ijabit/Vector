@@ -3,11 +3,12 @@
 -- Create date: Over the weekend
 -- Description:	Create Student script
 -- =============================================
-CREATE PROCEDURE CreateStudent
+CREATE PROCEDURE [dbo].[CreateStudent]
 	@firstName varchar(50) = null,
 	@middleName varchar(50) = null,
 	@lastName varchar(50) = null,
-	@emailAddress varchar(100) = null
+	@emailAddress varchar(100) = null,
+	@id int OUTPUT
 AS
 BEGIN
 	SET NOCOUNT ON;
@@ -19,5 +20,9 @@ BEGIN
            ,[EmailAddress])
      VALUES
            (@firstName, @middleName, @lastName, @emailAddress)
+
+	SET @id = SCOPE_IDENTITY();
+
+	RETURN @id
 
 END
