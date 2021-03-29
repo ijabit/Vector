@@ -25,20 +25,24 @@ namespace VectorSolution.Controllers
         {
             var sql = @"SELECT Student.Id, FirstName, MiddleName, LastName, EmailAddress, StudentCourses.CourseId, Course.Id, Course.Name, Course.Content
                         FROM Student
-                        INNER JOIN StudentCourses on StudentCourses.StudentId = Student.Id
-                        INNER JOIN Course on Course.Id = StudentCourses.CourseId";
+                        LEFT OUTER JOIN StudentCourses on StudentCourses.StudentId = Student.Id
+                        LEFT OUTER JOIN Course on Course.Id = StudentCourses.CourseId";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 var allStudents = (await connection.QueryAsync<Student, Course, Student>(sql, (student, course) =>
                 {
-                    student.Courses.Add(course);
+                    if (course.Id > 0)
+                    {
+                        student.Courses.Add(course);
+                    }
+                    
                     return student;
                 }, splitOn: "CourseId")).ToList();
 
                 var allStudentsGrouped = allStudents.GroupBy(x => x.Id).Select(g =>
                 {
                     var grouped = g.First();
-                    grouped.Courses = g.Select(x => x.Courses.Single()).ToList();
+                    grouped.Courses = g.Where(x => x.Courses.Any()).Select(x => x.Courses.Single()).ToList();
                     return grouped;
                 });
 
