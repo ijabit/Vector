@@ -99,7 +99,9 @@ export class StudentDetailsComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            this.courses.push(result);
+            if (result) {
+                this.courses.push(result);
+            }
         });
     }
 }
