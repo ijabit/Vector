@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using VectorSolution.Models;
 
 namespace VectorSolution
 {
@@ -26,7 +27,7 @@ namespace VectorSolution
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.Configure<ConnectionStringConfig>(this.Configuration.GetSection("ConnectionStrings"));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
