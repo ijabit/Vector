@@ -10,7 +10,7 @@ using VectorSolution.Models;
 namespace VectorSolution.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class StudentsController : ControllerBase
     {
         private string connectionString;
@@ -30,6 +30,17 @@ namespace VectorSolution.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("{id:int}")]
+        public async Task<Student> GetById(int id)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                var student = await connection.QueryFirstAsync<Student>($"SELECT Id, FirstName, MiddleName, LastName, EmailAddress FROM Student WHERE Id = {id}");
+                return student;
+            }
+        }
+
         [HttpPost]
         public async Task<Student> CreateStudent(Student newStudent)
         {
@@ -46,7 +57,7 @@ namespace VectorSolution.Controllers
                 parameters.AddDynamicParams(values);
                 parameters.Add("id", dbType: System.Data.DbType.Int32, direction: System.Data.ParameterDirection.Output);
 
-                var results = await connection.QueryAsync("CreateStudent", parameters, commandType: System.Data.CommandType.StoredProcedure);
+                await connection.QueryAsync("CreateStudent", parameters, commandType: System.Data.CommandType.StoredProcedure);
                 var newId = parameters.Get<int>("id");
 
                 var createdStudent = await connection.QueryFirstAsync<Student>($"SELECT Id, FirstName, MiddleName, LastName, EmailAddress FROM Student WHERE Id = {newId}");
