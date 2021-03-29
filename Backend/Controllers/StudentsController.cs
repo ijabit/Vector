@@ -23,10 +23,26 @@ namespace VectorSolution.Controllers
         [HttpGet]
         public async Task<IEnumerable<Student>> Get()
         {
+            var sql = @"SELECT Student.Id, FirstName, MiddleName, LastName, EmailAddress, StudentCourses.CourseId, Course.Id, Course.Name, Course.Content
+                        FROM Student
+                        INNER JOIN StudentCourses on StudentCourses.StudentId = Student.Id
+                        INNER JOIN Course on Course.Id = StudentCourses.CourseId";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                var allStudents = (await connection.QueryAsync<Student>("SELECT Id, FirstName, MiddleName, LastName, EmailAddress FROM Student")).ToList();
-                return allStudents;
+                var allStudents = (await connection.QueryAsync<Student, Course, Student>(sql, (student, course) =>
+                {
+                    student.Courses.Add(course);
+                    return student;
+                }, splitOn: "CourseId")).ToList();
+
+                var allStudentsGrouped = allStudents.GroupBy(x => x.Id).Select(g =>
+                {
+                    var grouped = g.First();
+                    grouped.Courses = g.Select(x => x.Courses.Single()).ToList();
+                    return grouped;
+                });
+
+                return allStudentsGrouped;
             }
         }
 
@@ -69,9 +85,29 @@ namespace VectorSolution.Controllers
         public async Task<Student> UpdateStudent(Student studentToUpdate)
         {
             var sql = $"UPDATE Student SET FirstName = @FirstName, MiddleName = @MiddleName, LastName = @LastName, EmailAddress = @EmailAddress WHERE Id = {studentToUpdate.Id}";
+            var removeCourseAssignmentsSql = $"DELETE FROM StudentCourses WHERE StudentId = {studentToUpdate.Id}";
+            var insertCourseAssignmentSql = $"INSERT INTO StudentCourses (StudentId, CourseId) VALUES (@StudentId, @CourseId)";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                connection.Execute(sql, studentToUpdate);
+                await connection.OpenAsync();
+
+                using (var transaction = await connection.BeginTransactionAsync())
+                {
+                    await connection.ExecuteAsync(sql, studentToUpdate, transaction);
+                    await connection.ExecuteAsync(removeCourseAssignmentsSql, transaction: transaction);
+                    foreach (var assignedCourse in studentToUpdate.Courses)
+                    {
+                        var model = new
+                        {
+                            StudentId = studentToUpdate.Id,
+                            CourseId = assignedCourse.Id
+                        };
+                        await connection.ExecuteScalarAsync(insertCourseAssignmentSql, model, transaction);
+                    }
+                    
+                    transaction.Commit();
+                }
+                    
 
                 var updatedStudent = await connection.QueryFirstAsync<Student>($"SELECT Id, FirstName, MiddleName, LastName, EmailAddress FROM Student WHERE Id = {studentToUpdate.Id}");
                 return updatedStudent;

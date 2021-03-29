@@ -8,7 +8,7 @@ import { Course } from '../models/course';
     providedIn: 'root'
 })
 export class CourseService {
-    private serviceUrl = "api/courses/courses.json";
+    private serviceUrl = "https://localhost:44333/api/Courses";
 
     private _courses: BehaviorSubject<Course[]>;
 

@@ -17,6 +17,8 @@ namespace VectorSolution
 {
     public class Startup
     {
+        private const string CorsPolicyName = "AllowedOriginsPolicy";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -28,6 +30,20 @@ namespace VectorSolution
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<ConnectionStringConfig>(this.Configuration.GetSection("ConnectionStrings"));
+            services.AddCors(options =>
+            {
+                options.AddPolicy(
+                    name: CorsPolicyName,
+                    builder =>
+                    {
+                        builder
+                            .WithOrigins("http://localhost:4200")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .AllowCredentials();
+                    });
+            });
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -45,6 +61,7 @@ namespace VectorSolution
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "VectorSolution v1"));
             }
 
+            app.UseCors(CorsPolicyName);
             app.UseHttpsRedirection();
 
             app.UseRouting();

@@ -21,23 +21,23 @@ namespace VectorSolution.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Student>> Get()
+        public async Task<IEnumerable<Course>> Get()
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                var allStudents = (await connection.QueryAsync<Student>("SELECT Id, Name, Content FROM Course")).ToList();
-                return allStudents;
+                var allCourses = (await connection.QueryAsync<Course>("SELECT Id, Name, Content FROM Course")).ToList();
+                return allCourses;
             }
         }
 
         [HttpGet]
         [Route("{id:int}")]
-        public async Task<Student> GetById(int id)
+        public async Task<Course> GetById(int id)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                var student = await connection.QueryFirstAsync<Student>($"SELECT Id, Name, Content FROM Course WHERE Id = {id}");
-                return student;
+                var course = await connection.QueryFirstAsync<Course>($"SELECT Id, Name, Content FROM Course WHERE Id = {id}");
+                return course;
             }
         }
     }
